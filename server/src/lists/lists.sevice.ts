@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Card } from 'src/card/card.model';
 import { CreateListsDto } from './dto/create.list.dto';
 import { Lists } from './lists.model';
+import { Users } from '../users/users.model'
 
 @Injectable()
 export class ListsService {
@@ -18,6 +19,9 @@ export class ListsService {
       include: [
         {
           model: Card,
+          include: [{
+            model: Users,
+          }]
         },
       ],
     });

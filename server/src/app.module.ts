@@ -5,8 +5,9 @@ import { UsersModule } from './users/users.module';
 import { ListsModule } from './lists/lists.module';
 import { CardModule } from './card/card.module';
 import { Lists } from './lists/lists.model';
-import { User } from './users/users.model';
+import { Users } from './users/users.model';
 import { Card } from './card/card.model';
+import { cardsUsers } from './card/card.cardsUsers'
 @Module({
   controllers: [],
   providers: [],
@@ -19,7 +20,7 @@ import { Card } from './card/card.model';
       database: process.env.POSTGRES_DB,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
-      models: [User, Lists, Card],
+      models: [Users, Lists, Card, cardsUsers],
       autoLoadModels: true,
     }),
     ListsModule,

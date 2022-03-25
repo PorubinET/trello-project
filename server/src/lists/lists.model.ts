@@ -1,5 +1,7 @@
 import { HasMany, Column, Model, DataType, Table } from 'sequelize-typescript';
 import { Card } from '../card/card.model';
+import { Users } from '../users/users.model';
+
 
 interface CreateListsAttrs {
   title: string;

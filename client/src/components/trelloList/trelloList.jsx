@@ -20,6 +20,7 @@ const ListContainer = styled.div`
   `;
 
 const TrelloList = ({ title, cards, _id, index, position }) => {
+
   const dispatch = useDispatch();
 
   let [titleText, setTitle] = useState(title);
@@ -58,7 +59,7 @@ const TrelloList = ({ title, cards, _id, index, position }) => {
                   />
                     <MoreHorizIcon />
                 </Grid>
-                {cards.map((card, indexCard) =>
+                {cards ? cards.map((card, indexCard) =>
                   <Grid item xs={12} key={card.id} cards={cards} >
                     <TrelloCard
                       key={card.id}
@@ -66,14 +67,14 @@ const TrelloList = ({ title, cards, _id, index, position }) => {
                       id={card.id}
                       desc={card.description}
                       // listId={card.listId}
-                      // indexList={index}
+                      indexList={index}
                       // time={card.time}
                       index={indexCard}
                       cards={cards}
                       // usersCard={card.usersCard}
                     />
                   </Grid>
-                )}
+                ) : <></>}
                 {provided.placeholder}
                 <TrelloActionButton
                   _id = {_id}

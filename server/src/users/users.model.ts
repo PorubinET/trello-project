@@ -1,4 +1,7 @@
-import { Column, Model, DataType, Table } from 'sequelize-typescript';
+import { Column, Model, DataType, Table, BelongsToMany } from 'sequelize-typescript';
+import { Lists } from '../lists/lists.model';
+import { Card } from '../card/card.model';
+import { cardsUsers } from '../card/card.cardsUsers'
 
 interface UserCreationAttrs {
   name: string;
@@ -6,7 +9,7 @@ interface UserCreationAttrs {
 }
 
 @Table({ tableName: 'users' })
-export class User extends Model<User, UserCreationAttrs> {
+export class Users extends Model<Users, UserCreationAttrs> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -15,9 +18,12 @@ export class User extends Model<User, UserCreationAttrs> {
   })
   id: number;
 
-  @Column({ type: DataType.STRING, unique: false })
+  @BelongsToMany(() => Card, () => cardsUsers)
+  cardUsers: Card[];
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: true })
   name: string;
 
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, unique: true, allowNull: true })
   email: string;
 }

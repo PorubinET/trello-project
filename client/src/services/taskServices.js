@@ -18,3 +18,8 @@ export function addCard(body) {
     return axios.post(apiUrl + "card", body)
 }
 
+export function changeDate(body) {
+    console.log(body, "changeDate")
+    return axios.patch(apiUrl + "card", body)
+}
+

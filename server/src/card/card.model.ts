@@ -1,6 +1,7 @@
 import {
   BelongsTo,
   BelongsToMany,
+  HasMany,
   Column,
   Model,
   DataType,
@@ -8,7 +9,8 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Lists } from '../lists/lists.model';
-import { CardsList } from './cards-list.model';
+import { Users } from '../users/users.model';
+import { cardsUsers } from './card.cardsUsers'
 
 interface CardCreateAttr {
   title: string;
@@ -25,15 +27,18 @@ export class Card extends Model<Card, CardCreateAttr> {
   })
   id: number;
 
+  @ForeignKey(() => Lists)
+  listId: number;
+
+  @BelongsTo(() => Lists)
+  list: Lists;
+
   @Column({ type: DataType.STRING, unique: false })
   title: string;
 
   @Column({ type: DataType.STRING, unique: false })
   description: string;
 
-  @ForeignKey(() => Lists)
-  listId: number;
-
-  @BelongsTo(() => Lists)
-  author: Lists;
+  @BelongsToMany(() => Users, () => cardsUsers)
+  cardUsers: Users[];
 }

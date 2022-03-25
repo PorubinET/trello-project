@@ -17,7 +17,7 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { green, red, blue } from '@mui/material/colors';
-import { sort } from "../../store/listsSlice"
+import { sort, changeCardDate } from "../../store/listsSlice"
 import './dialogs.scss';
 
 export default function FormDialog({ text, id, desc, time, indexList, usersCard, index }) {
@@ -51,7 +51,7 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
 
   const setDate = () => {
     if(textCard) {
-      // dispatch(changeCardDate({ id, indexList, text: textCard.trim(), desc: descCard.trim() }))
+      dispatch(changeCardDate({ id, indexList, title: textCard.trim(), description: descCard.trim() }))
       handleClickOpen()
     }
     else{

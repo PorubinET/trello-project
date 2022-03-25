@@ -11,7 +11,8 @@ const CardContainer = styled.div`
   margin-bottom: 8px;
 `
 
-const TrelloCard = ({ text, id, indexList, index, listId, desc, time, userId, usersCard }) => {
+const TrelloCard = ({ title, id, indexList, index, listId, desc, time, userId, usersCard }) => {
+  console.log()
   
   return (
     <Draggable draggableId={String(id)} index={index}>
@@ -26,7 +27,7 @@ const TrelloCard = ({ text, id, indexList, index, listId, desc, time, userId, us
               <CardContent className="card__content">
                 <FormDialog
                   key={id}
-                  text={text}
+                  text={title}
                   id={id}
                   index={index}
                   listId={listId}

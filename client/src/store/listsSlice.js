@@ -2,7 +2,8 @@ import {
     getLists,
     addList,
     addUser,
-    addCard
+    addCard,
+    changeDate
 } from "../../src/services/taskServices";
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -39,6 +40,7 @@ export const listSlice = createSlice({
             }
 
             if (droppableIdStart !== "all-lists" && droppableIdStart === droppableIdEnd && move !== true) {
+                console.log(action.payload, "<<<dasd")
                 const list = state.lists.find((list) => +droppableIdStart === list.listId)
                 const card = list.cards.splice(+droppableIndexStart, 1)
                 list.cards.splice(+droppableIndexEnd, 0, ...card)
@@ -62,9 +64,15 @@ export const listSlice = createSlice({
                 state.lists = state.lists.concat(action.payload);
             })
             .addCase(createList.fulfilled, (state, action) => {
-                state.lists = state.lists.concat(action.payload);
+                let newList = {
+                    id: action.payload.id,
+                    title: action.payload.title,
+                    cards: []
+                }
+                state.lists.push(newList)
             })
             .addCase(addCards.fulfilled, (state, action) => {
+                console.log(action.payload, "action.payload")
                 state.lists = state.lists.map((list)=>{
                     if(list.id === action.payload.listId)
                         return {...list, cards: [...list.cards, action.payload]}
@@ -123,7 +131,21 @@ export default listSlice.reducer;
             try {
                 console.log(payload)
                 const response = await addCard(payload);
-                // console.log(response)
+                const data = await response.data;
+                console.log(data)
+                return data
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    )
+
+    export const changeCardDate = createAsyncThunk(
+        'changeDate/card',
+        async function(payload) {
+            try {
+                console.log(payload, "changeDate")
+                const response = await changeDate(payload);
                 const data = await response.data;
                 console.log(data)
                 return data
