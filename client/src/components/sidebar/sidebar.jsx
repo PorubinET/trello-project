@@ -19,7 +19,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import { useDispatch } from "react-redux";
-import { createUser } from "../../store/listsSlice"
+// import { createUser } from "../../store/listsSlice"
 
 
 const drawerWidth = 240;
@@ -33,8 +33,8 @@ export default function ClippedDrawer() {
 
   
   const userOpen = () => { setCreateUserOpen(!createUserOpen) }
-  const changeTextName = (e) => { setUserName(e.target.value.replace(/ +/g, ' ')) }
-  const changeTextEmail = (e) => { setUserEmail(e.target.value.replace(/ +/g, ' ')) }
+  const changeTextName = (e) => { setUserName(e.target.value) }
+  const changeTextEmail = (e) => { setUserEmail(e.target.value) }
 
   const addUser = () => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -45,7 +45,7 @@ export default function ClippedDrawer() {
       alert("Имя длиннее 15 символов")
     }
     else{
-      dispatch(createUser({ email: userEmail, name: userName }))
+      // dispatch(createUser({ email: userEmail.trim(), name: userName.trim() }))
       setUserEmail(userEmail = "")
       setUserName(userName = "")
       userOpen()
@@ -73,7 +73,6 @@ export default function ClippedDrawer() {
         }}
       >
         <Toolbar />
-        <Button onClick={userOpen}>dasdasd</Button>
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {['Create User'].map((text) => (

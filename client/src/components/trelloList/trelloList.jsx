@@ -1,16 +1,14 @@
-import { useState, React } from "react";
-import { useDispatch } from "react-redux";
-import { Grid } from "@mui/material";
-import TrelloCard from "../trelloCards/trelloCard"
-import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
+import TrelloCard from '../trelloCards/trelloCard';
+import TrelloActionButton from '../TrelloActionButton/TrelloActionButton';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Droppable, Draggable } from "react-beautiful-dnd";
-import { changeListTitle } from "../../store/listsSlice"
 import TextField from '@mui/material/TextField';
-import styled from "styled-components"
-
-
-import "./trelloList.scss"
+import styled from 'styled-components';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { useState, React } from 'react';
+import { useDispatch } from 'react-redux';
+import { Grid } from '@mui/material';
+// import { changeListTitle } from "../../store/listsSlice"
+import './trelloList.scss';
 
 const ListContainer = styled.div`
     background-color: #d8dde0;
@@ -26,12 +24,12 @@ const TrelloList = ({ title, cards, _id, index, position }) => {
 
   let [titleText, setTitle] = useState(title);
 
-  const changeTitleText = (e) => { setTitle(e.target.value.replace(/ +/g, ' ')) }
+  const changeTitleText = (e) => { setTitle(e.target.value) }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      dispatch(changeListTitle({_id, titleText}))
+      // dispatch(changeListTitle({_id, titleText: titleText.trim()}))
     }
   }
 
@@ -64,22 +62,22 @@ const TrelloList = ({ title, cards, _id, index, position }) => {
                   <Grid item xs={12} key={card.id} cards={cards} >
                     <TrelloCard
                       key={card.id}
-                      text={card.text}
+                      title={card.title}
                       id={card.id}
                       desc={card.description}
-                      listId={card.listId}
-                      time={card.time}
+                      // listId={card.listId}
+                      // indexList={index}
+                      // time={card.time}
                       index={indexCard}
-                      indexList={index}
                       cards={cards}
-                      usersCard={card.usersCard}
-
+                      // usersCard={card.usersCard}
                     />
                   </Grid>
                 )}
                 {provided.placeholder}
                 <TrelloActionButton
-                  _id={_id}
+                  _id = {_id}
+                  index = {index}
                 />
               </div>
             )}

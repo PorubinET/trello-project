@@ -1,7 +1,4 @@
-import * as React from 'react';
-import { useState } from "react";
-import { useDropzone } from 'react-dropzone';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,18 +6,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import { green, red, blue } from '@mui/material/colors';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Card from '@mui/material/Card';
-import { changeCardDate, sort, deleteUser, addUser } from "../../store/listsSlice"
-
-import "./dialogs.scss";
+import { useDropzone } from 'react-dropzone';
+import { useDispatch, useSelector } from "react-redux";
+import { Grid } from "@mui/material";
+import { green, red, blue } from '@mui/material/colors';
+import { sort } from "../../store/listsSlice"
+import './dialogs.scss';
 
 export default function FormDialog({ text, id, desc, time, indexList, usersCard, index }) {
   const dispatch = useDispatch();
@@ -36,9 +34,9 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
   let [usersProfOpen, setUsersProfOpen] = useState(false)
 
 
-  const changeText = (e) => { setTextCard(e.target.value.replace(/ +/g, ' ')) }
-  const changeDesc = (e) => { setDescCard(e.target.value.replace(/ +/g, ' ')) }
-  const cUsers = usersCard.map(uCard => users.filter(element => element.userId === uCard)[0])
+  const changeText = (e) => { setTextCard(e.target.value) }
+  const changeDesc = (e) => { setDescCard(e.target.value) }
+  //const cUsers = usersCard.map(uCard => users.filter(element => element.userId === uCard)[0])
 
 
   const dragCard = () => { setMove(!move) }
@@ -48,12 +46,12 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
   const getUser = (id) => { setUserInfo(id); setProfOpen(!profOpen)}
   
 
-  const removeUser = (id) => { dispatch(deleteUser({ id, indexList, indexCard: index }))}
-  const appendUser = (id) => { dispatch(addUser({ id, indexList, indexCard: index }))}
+  // const removeUser = (id) => { dispatch(deleteUser({ id, indexList, indexCard: index }))}
+  // const appendUser = (id) => { dispatch(addUser({ id, indexList, indexCard: index }))}
 
   const setDate = () => {
-    if(textCard !== null && textCard !== undefined && textCard.length > 0) {
-      dispatch(changeCardDate({ id, indexList, text: textCard, desc: descCard }))
+    if(textCard) {
+      // dispatch(changeCardDate({ id, indexList, text: textCard.trim(), desc: descCard.trim() }))
       handleClickOpen()
     }
     else{
@@ -124,7 +122,7 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
           />
           <Grid style={{ display: "flex" }}>
 
-            {cUsers.map((cUser, index) =>
+            {/* {cUsers.map((cUser, index) =>
               <CardHeader
                 action={
                   <IconButton aria-label="settings" onClick={() => getUser(index)}>
@@ -137,7 +135,7 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
                 key={cUser.userId}
                 style={{ textAlign: "right", padding: "0px", margin: "0px" }}
               />
-            )}
+            )} */}
 
             <Grid>
               <CardHeader
@@ -160,12 +158,10 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
               <CardContent style={{ width: "320px", display: "flex", justifyContent: "space-between" }}>
                 <Grid style={{ textAlign: "left" }}>
                   <Typography variant="body2" color="text.secondary">
-                    <span>{users[userInfo].name}</span>
-
+                    {/* <span>{users[userInfo].name}</span> */}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    <span>{users[userInfo].email}</span>
-
+                    {/* <span>{users[userInfo].email}</span> */}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     <span>8989-888-88-88</span>
@@ -173,7 +169,7 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
                 </Grid>
                 <Grid>
                   <Avatar sx={{ bgcolor: blue[500], width: "40px", height: "40px" }} aria-label="recipe">
-                    {users[userInfo].name[0]}
+                    {/* {users[userInfo].name[0]} */}
                   </Avatar>
                 </Grid>
               </CardContent>
@@ -201,8 +197,14 @@ export default function FormDialog({ text, id, desc, time, indexList, usersCard,
                     </Typography>
                   </Grid>
                   <Grid style={{ display: "flex" }}>
-                    <Button size="small" onClick={() => removeUser(cUser.userId)}>Del</Button>
-                    <Button size="small" onClick={() => appendUser(cUser.userId)}>Add</Button>
+                    <Button size="small" 
+                    // onClick={() => removeUser(cUser.userId)}
+                    >
+                      Del</Button>
+                    <Button size="small" 
+                    // onClick={() => appendUser(cUser.userId)}
+                    >
+                      Add</Button>
                     <CardHeader
                       action={
                         <IconButton aria-label="settings">

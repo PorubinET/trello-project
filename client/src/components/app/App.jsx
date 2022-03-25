@@ -1,12 +1,11 @@
-import React from "react"
-import TrelloList from "../trelloList/trelloList"
-import Sidebar from "../sidebar/sidebar"
-import { useSelector } from 'react-redux'
-import TrelloActionButton from "../TrelloActionButton/TrelloActionButton";
-import { DragDropContext, Droppable } from "react-beautiful-dnd"
-import { useDispatch } from "react-redux"
-import { sort } from "../../store/listsSlice"
-import styled from "styled-components"
+import React, { useEffect } from 'react';
+import TrelloList from '../trelloList/trelloList';
+import Sidebar from '../sidebar/sidebar';
+import TrelloActionButton from '../TrelloActionButton/TrelloActionButton';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { sort, loadLists } from '../../store/listsSlice';
 import './App.css';
 
 const ListContainer = styled.div`
@@ -20,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
   
   const lists = useSelector(state => state.lists.lists)
-  console.log(lists, "lists<<<<<")
+  console.log(lists.map(list => list), "<<<<App")
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result
 
@@ -38,6 +37,10 @@ function App() {
     ))
   }
 
+  useEffect(() => {
+    dispatch(loadLists())
+  }, [])
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-lists" direction="horizontal" type="list">
@@ -46,12 +49,12 @@ function App() {
             <Sidebar />
             {lists.map((list, index) =>  
               <TrelloList
-                _id={list.listId}
-                key={list.listId}
+                _id={list.id}
+                key={list.id}
                 title={list.title}
                 cards={list.cards}
-                name={list.name}
                 email={list.email}
+                name={list.name}
                 index={index}
               />
             )}

@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react';
 import Card from '@mui/material/Card';
+import FormDialog from '../dialogs/dialogs';
 import CardContent from '@mui/material/CardContent';
-import { Draggable } from 'react-beautiful-dnd';
-import styled from "styled-components"
+import styled from 'styled-components';
 import Grid from '@mui/material/Grid';
-import FormDialog from "../dialogs/dialogs"
-
-import "./trelloCard.scss"
+import { Draggable } from 'react-beautiful-dnd';
+import "./trelloCard.scss";
 
 const CardContainer = styled.div`
   margin-bottom: 8px;
