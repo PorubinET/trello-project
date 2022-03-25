@@ -1,5 +1,4 @@
-export class CreateTodoDto {
+export class CreateCardDto {
   title: string;
   description: string;
 }
-// 1
